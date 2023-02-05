@@ -1,5 +1,6 @@
 import { notFoundError, PaymentRequired } from "@/errors";
 import enrollmentRepository from "@/repositories/enrollment-repository";
+import { hotelsRepository } from "@/repositories/hotels-repository";
 import ticketRepository from "@/repositories/ticket-repository";
 
 export async function getHotelsService(userId: number) {
@@ -15,6 +16,7 @@ export async function getHotelsService(userId: number) {
     || !ticket.TicketType.isRemote) {
         throw PaymentRequired();
     }
+    const hotels = await hotelsRepository.findHotels();
     
-    return ticket;
+    return hotels;
 }
