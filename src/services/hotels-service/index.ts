@@ -12,7 +12,7 @@ export async function getHotelsService(userId: number) {
     if (!ticket) {
         throw notFoundError();
     }
-    if (ticket.status === "RESERVED" || !ticket.TicketType.includesHotel 
+    if (!ticket.TicketType.includesHotel 
     || !ticket.TicketType.isRemote) {
         throw PaymentRequired();
     }
