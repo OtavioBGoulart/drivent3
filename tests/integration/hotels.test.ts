@@ -1,6 +1,6 @@
 import app, { init } from "@/app";
 import { prisma } from "@/config";
-import { createEnrollmentWithAddress, createTicketType, createUser, createTicket } from "../factories";
+import { createEnrollmentWithAddress, createTicketType, createUser, createTicket, createHotels, findHotels } from "../factories";
 import faker from "@faker-js/faker";
 import httpStatus from "http-status";
 import * as jwt from "jsonwebtoken";
@@ -102,9 +102,15 @@ describe("GET /hotels", () => {
             const user = await createUser();
             const token = await generateValidToken(user);
             const enrollment = await createEnrollmentWithAddress(user);
-            const ticketType = await createTicketType(true, true);
+            const ticketType = await createTicketType(false, true);
             await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
-            const hotels
+            //const hotels = await findHotels();
+            //const hotels = await createHotels();
+
+            const response = await server.get("/hotels").set("Authorization", `Bearer ${token}`);
+
+            expect(response.status).toBe(httpStatus.OK);
+            expect(response.body).toEqual([])
         })
     })
 })
