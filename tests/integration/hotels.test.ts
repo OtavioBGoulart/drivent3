@@ -7,7 +7,7 @@ import * as jwt from "jsonwebtoken";
 import supertest from "supertest";
 import { cleanDb, generateValidToken } from "../helpers";
 import { TicketStatus } from "@prisma/client";
-import { response } from "express";
+
 
 beforeAll(async () => {
     await init();
