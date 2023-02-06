@@ -1,11 +1,6 @@
 import { Hotel } from "@prisma/client";
 import { prisma } from "@/config";
 
-export async function findHotels() : Promise<Hotel []> {
-    return await prisma.hotel.findMany();
-}
-
-
 export async  function createHotels() : Promise<Hotel> {
     return await prisma.hotel.create({
         data: {

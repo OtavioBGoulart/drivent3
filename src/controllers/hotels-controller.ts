@@ -22,7 +22,7 @@ export async function getHotels(req: AuthenticatedRequest, res: Response) {
 export async function getHotelById(req: AuthenticatedRequest, res: Response) {
     const { userId } = req;
     const hotelId  = Number(req.params.hotelId);
-    console.log(hotelId)
+    
 
 
     try {

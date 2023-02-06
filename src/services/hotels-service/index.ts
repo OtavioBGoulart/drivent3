@@ -36,13 +36,13 @@ export async function getHotelByIdService(userId: number, hotelId: number) {
     || ticket.TicketType.isRemote) {
         throw PaymentRequired();
     }
-    //console.log("oi")
+    
 
     const hotel = await hotelsRepository.findHotelWithRooms(hotelId);
     console.log("hotel", hotel)
     if (!hotel) throw notFoundError();
 
-    console.log("opa")
+    
 
     return hotel;
 }
