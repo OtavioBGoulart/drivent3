@@ -3,7 +3,6 @@ import enrollmentRepository from "@/repositories/enrollment-repository";
 import { hotelsRepository } from "@/repositories/hotels-repository";
 import ticketRepository from "@/repositories/ticket-repository";
 import { TicketStatus } from "@prisma/client";
-import { ParamsDictionary } from "express-serve-static-core";
 
 
 export async function getHotelsService(userId: number) {
@@ -15,7 +14,7 @@ export async function getHotelsService(userId: number) {
     if (!ticket) {
         throw notFoundError();
     }
-    if (!ticket.TicketType.includesHotel 
+    if (ticket.status === TicketStatus.RESERVED || !ticket.TicketType.includesHotel 
     || ticket.TicketType.isRemote) {
         throw PaymentRequired();
     }
@@ -33,14 +32,14 @@ export async function getHotelByIdService(userId: number, hotelId: number) {
     if (!ticket) {
         throw notFoundError();
     }
-    if (!ticket.TicketType.includesHotel 
+    if (ticket.status === TicketStatus.RESERVED || !ticket.TicketType.includesHotel 
     || ticket.TicketType.isRemote) {
         throw PaymentRequired();
     }
-    console.log("oi")
+    //console.log("oi")
 
     const hotel = await hotelsRepository.findHotelWithRooms(hotelId);
-    console.log(hotel)
+    console.log("hotel", hotel)
     if (!hotel) throw notFoundError();
 
     console.log("opa")

@@ -14,3 +14,13 @@ export async  function createHotels() : Promise<Hotel> {
         }
     })
 }
+
+export async function createRoom(hotelId: number) {
+    return await prisma.room.create({
+        data: {
+            name: "Suite",
+            capacity: 2,
+            hotelId
+        }
+    })
+}
