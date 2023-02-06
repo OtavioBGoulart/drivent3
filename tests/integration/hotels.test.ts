@@ -11,11 +11,16 @@ import { response } from "express";
 
 beforeAll(async () => {
     await init();
+    await cleanDb();
 });
 
 beforeEach(async () => {
     await cleanDb();
 });
+
+afterAll(async () => {
+    await cleanDb();
+})
 
 const server = supertest(app);
 
@@ -111,6 +116,29 @@ describe("GET /hotels", () => {
 
             expect(response.status).toBe(httpStatus.OK);
             expect(response.body).toEqual([])
+        })
+
+        it("should respond with status 200 when user didnt paid for the ticket yet", async () => {
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const enrollment = await createEnrollmentWithAddress(user);
+            const ticketType = await createTicketType(false, true);
+            await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
+            //const hotels = await findHotels();
+            const hotels = await createHotels();
+
+            const response = await server.get("/hotels").set("Authorization", `Bearer ${token}`);
+
+            expect(response.status).toBe(httpStatus.OK);
+            expect(response.body).toEqual([
+                {
+                    id: hotels.id,
+                    name: hotels.name,
+                    image: hotels.image,
+                    createdAt: hotels.createdAt.toISOString(),
+                    updatedAt: hotels.updatedAt.toISOString(),
+                },
+            ])
         })
     })
 })
