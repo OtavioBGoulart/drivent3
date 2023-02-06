@@ -25,7 +25,7 @@ afterAll(async () => {
 const server = supertest(app);
 
 describe("GET /hotels", () => {
-    it("Should respond with status 401 if no token is given", async () => {
+    it("should respond with status 401 if no token is given", async () => {
         const response = await server.get("/hotels");
 
         expect(response.status).toBe(httpStatus.UNAUTHORIZED);
@@ -198,7 +198,7 @@ describe("GET /hotels", () => {
 //             expect(response.status).toBe(httpStatus.PAYMENT_REQUIRED);
 //         })
 
-//         it("should respond with status 402 when user didnt paid for the ticket yet", async () => {
+//         it("should respond with status 402 when event is remote", async () => {
 //             const user = await createUser();
 //             const token = await generateValidToken(user);
 //             const enrollment = await createEnrollmentWithAddress(user);
@@ -210,7 +210,7 @@ describe("GET /hotels", () => {
 //             expect(response.status).toBe(httpStatus.PAYMENT_REQUIRED);
 //         })
 
-//         it("should respond with status 402 when user didnt paid for the ticket yet", async () => {
+//         it("should respond with status 402 when event doesnt include hotel", async () => {
 //             const user = await createUser();
 //             const token = await generateValidToken(user);
 //             const enrollment = await createEnrollmentWithAddress(user);
